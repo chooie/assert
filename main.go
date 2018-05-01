@@ -1,6 +1,7 @@
 package assert
 
 import (
+	"fmt"
 	"reflect"
 	"testing"
 )
@@ -24,14 +25,23 @@ func assertEqualError(
 	expected interface{},
 	messages []string,
 ) {
-	message :=
-		makeMultilineStringOfMessages(messages) + "\n" +
-			"Expected <" + reflect.TypeOf(expected).String() + ">'" +
-			expected.(string) + "',\n" +
-			"But got <" + reflect.TypeOf(actual).String() + ">'" +
-			actual.(string) + "'\n"
+	t.Errorf(MakeEqualTestMessage(actual, expected, messages))
+}
 
-	t.Errorf(message)
+// MakeEqualTestMessage returns a nicely formatted equal error string
+func MakeEqualTestMessage(
+	actual interface{},
+	expected interface{},
+	messages []string,
+) string {
+	return fmt.Sprintf(
+		"%v\nExpected <%v>%v,\nBut got <%v>%v\n",
+		makeMultilineStringOfMessages(messages),
+		reflect.TypeOf(expected),
+		expected,
+		reflect.TypeOf(actual),
+		actual,
+	)
 }
 
 func makeMultilineStringOfMessages(messages []string) string {
