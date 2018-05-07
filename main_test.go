@@ -10,6 +10,7 @@ import (
 func TestEqual(t *testing.T) {
 	assert.Equal(t, "yo", "yo", "Supports strings")
 	assert.Equal(t, 1, 1, "Supports numbers")
+	assert.Equal(t, map[string]int{"a": 1}, map[string]int{"a": 1})
 }
 func TestMakeEqualTestMessageWithNoExtraMessages(t *testing.T) {
 	actual := assert.MakeEqualTestMessage(1, 2, []string{})

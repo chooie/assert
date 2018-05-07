@@ -14,7 +14,7 @@ func Equal(
 	expected interface{},
 	messages ...string,
 ) {
-	if actual != expected {
+	if !reflect.DeepEqual(actual, expected) {
 		assertEqualError(t, actual, expected, messages)
 	}
 }
